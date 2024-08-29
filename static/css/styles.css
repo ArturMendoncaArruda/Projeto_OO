@@ -1,0 +1,34 @@
+/* styles.css */
+
+/* Estilo para o fundo da página */
+body {
+    background-color: #f0f0f0; /* Cinza suave */
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Estilo para a navbar */
+.navbar {
+    background-color: #004080; /* Azul escuro suave */
+    color: white;
+    padding: 15px;
+    text-align: center;
+}
+
+/* Estilo para os links da navbar */
+.navbar a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 20px;
+    display: inline-block;
+}
+
+.navbar a:hover {
+    background-color: #003366; /* Azul escuro mais intenso para o hover */
+}
+
+/* Estilo para o conteúdo principal */
+.container {
+    padding: 20px;
+}

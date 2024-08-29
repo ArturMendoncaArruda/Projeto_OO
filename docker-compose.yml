@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_DB: mydatabase        # Nome do banco de dados
+      POSTGRES_USER: myuser          # Usuário do banco de dados
+      POSTGRES_PASSWORD: mypassword  # Senha do banco de dados
+      LANG: C.UTF-8                  # Configuração de locale
+      LC_ALL: C.UTF-8                # Configuração de locale
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@example.com   # Email de login do pgAdmin
+      PGADMIN_DEFAULT_PASSWORD: admin            # Senha de login do pgAdmin
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+
+
+volumes:
+  postgres_data:
+  pgadmin_data:
