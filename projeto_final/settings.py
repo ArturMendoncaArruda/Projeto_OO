@@ -74,14 +74,15 @@ WSGI_APPLICATION = 'projeto_final.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'mydatabase',
-        'USER': 'myuser',
-        'PASSWORD': 'mypassword',
-        'HOST': 'db',  # Nome do serviço do banco de dados no Docker Compose
-        'PORT': '5432', # Porta padrão do PostgreSQL
+        'NAME': 'postgres',  # Substitua pelo nome real do banco de dados, se diferente
+        'USER': 'postgres',
+        'PASSWORD': 'pCjiyjY1u6oeYz1H',
+        'HOST': 'ceaselessly-smashing-treefrog.data-1.use1.tembo.io',
+        'PORT': '5432',
     }
 }
 
