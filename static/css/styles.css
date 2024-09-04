@@ -1,34 +1,106 @@
 /* styles.css */
 
-/* Estilo para o fundo da página */
+/* Centralize os inputs e o texto dentro dos inputs */
+.form-control {
+    border-radius: 5px;
+    border: 1px solid #cccccc;
+    padding: 10px;
+    font-size: 16px;
+    text-align: center; /* Centraliza o texto horizontalmente */
+    width: 100%;
+    max-width: 600px;
+    background-color: transparent; 
+
+}
+
+/* Limite a largura dos inputs e centralize */
+.input-group .form-control {
+    max-width: none;
+    margin: 0 auto; /* Centraliza horizontalmente */
+    border-radius: 40px;
+
+}
+
+/* Ajusta o tamanho do ícone e o centraliza verticalmente */
+.input-group-text {
+    color: aliceblue;
+    background-color: transparent;
+    border: none;
+    padding: 0 5px;
+    display: flex;
+    align-items: center; /* Alinha o ícone verticalmente */
+    justify-content: center; /* Centraliza o ícone horizontalmente */
+    font-size: 18px; /* Ajusta o tamanho dos ícones */
+}
+
+
+/* Outros estilos */
 body {
-    background-color: #f0f0f0; /* Cinza suave */
-    font-family: Arial, sans-serif;
+    background-image: url('/static/images/background.jpg');
+    background-size: cover; 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     padding: 0;
 }
 
-/* Estilo para a navbar */
 .navbar {
-    background-color: #004080; /* Azul escuro suave */
-    color: white;
+    background-color:#9C8ADE;
+    color: #4A90E2;
     padding: 15px;
     text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Estilo para os links da navbar */
-.navbar a {
-    color: white;
-    text-decoration: none;
-    padding: 10px 20px;
-    display: inline-block;
+.login-container {
+    background-color: transparent;
+    border: 1px solid #cccccc;;
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 8px rgba(14, 194, 225, 0.2);
+    padding: 40px;
+    margin: auto;
+    max-width: 350px;
+}
+/* Para outras páginas, remova o estilo do container */
+.container:not(.login-container) {
+    background-color: transparent; /* Remove o fundo branco */
+    border-radius: 0; /* Remove o arredondamento dos cantos */
+    box-shadow: none; /* Remove a sombra */
+    padding: 0; /* Remove o padding */
 }
 
-.navbar a:hover {
-    background-color: #003366; /* Azul escuro mais intenso para o hover */
+/* Estilo para o botão de submit */
+.btn-primary {
+    background-color: #F0F0F0; /* Cor principal do botão */
+    border-color: #D6A7F0 ;
+    color: #000000;
+    border-radius: 15px;
+    padding: 8px; /* Reduz o padding para diminuir o tamanho */
+    width: 100%; /* Faz o botão ocupar a largura completa */
+    
 }
 
-/* Estilo para o conteúdo principal */
-.container {
-    padding: 20px;
+.btn-primary:hover {
+    background-color: #C0C0C0; /* Mudança de cor no hover */
+    border-color: #A76CC7 ;
+}
+
+h2.text-center {
+    color: #ffffff; 
+}
+
+.remember-forgot{
+    color: #ffffff;
+
+}
+
+
+.form-control::placeholder {
+    color: #cccccc; 
+}
+
+.form-control:focus {
+    background-color: transparent;
+    border-color: #ffffff; 
+    outline: none; 
 }

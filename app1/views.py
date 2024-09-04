@@ -9,6 +9,8 @@ from django.contrib.auth.hashers import check_password
 from rest_framework import status
 from rest_framework.authtoken.models import Token
 from django.contrib.auth.models import User
+from django.contrib.auth import logout
+from django.http import JsonResponse
 
 class UserlistCreate(generics.ListCreateAPIView):
     queryset = Jogo_final.objects.all()
@@ -47,16 +49,34 @@ def login(request):
 def cadastro(request):
     usuario_nome = request.data.get('usuario_nome')
     if Jogo_final.objects.filter(usuario_nome=usuario_nome).exists():
-        return Response({"Usuário já existe, troque de nome"})
+        return Response({"Usuário já existe, troque de nome"}, status=status.HTTP_400_BAD_REQUEST)
     serializer = Jogo_finalSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
-        return Response({"user": serializer.data})
+        return Response({"user": serializer.data}, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET'])
 def token(request):
     return Response({})
+
+@api_view(['POST'])
+def logout_view(request):
+    logout(request)
+    return Response(status=status.HTTP_200_OK)
+
+def login_page(request):
+    return render(request, 'login.html')
+
+
+def main_page(request):
+    return render(request, 'index.html')
+
+def stats_page(request):
+    return render(request, 'stats.html')
+
+
+
 
 
 
