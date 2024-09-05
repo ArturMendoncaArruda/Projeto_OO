@@ -1,10 +1,8 @@
-# app1/models.py
 from django.contrib.auth.models import User
 from django.db import models
 
-
-class Jogo_final(models.Model):
-    id_usuario = models.AutoField(primary_key=True)
+class Dados_jogo(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)  # Relaciona com o auth_user
     usuario_nome = models.CharField(max_length=300)
     usuario_senha = models.CharField(max_length=70)
     dinheiro = models.IntegerField(default=0)

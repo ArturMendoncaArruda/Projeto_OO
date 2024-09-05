@@ -1,72 +1,74 @@
 # app1/views.py
 from django.shortcuts import render
 from rest_framework import generics
-from app1.models import Jogo_final
+from app1.models import Dados_jogo
 from .serializers import Jogo_finalSerializer
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.contrib.auth.hashers import check_password
 from rest_framework import status
-from rest_framework.authtoken.models import Token
 from django.contrib.auth.models import User
 from django.contrib.auth import logout
-from django.http import JsonResponse
+from django.contrib.auth import authenticate, login
+from django.shortcuts import redirect
+from django.contrib.auth import logout as auth_logout
 
 class UserlistCreate(generics.ListCreateAPIView):
-    queryset = Jogo_final.objects.all()
+    queryset = Dados_jogo.objects.all()
     serializer_class = Jogo_finalSerializer
 
 class UserRetrieveUpdateDelete(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Jogo_final.objects.all()
+    queryset = Dados_jogo.objects.all()
     serializer_class = Jogo_finalSerializer
 
 
 
 
-@api_view(['POST'])
-def login(request):
-    usuario_nome = request.data.get('usuario_nome')
-    senha = request.data.get('usuario_senha')
 
-    user = Jogo_final.objects.filter(usuario_nome=usuario_nome).first()
     
-    if user:
-        # Debug: Verifique os valores
-        print(f"Senha armazenada: '{user.usuario_senha}'")
-        print(f"Senha fornecida: '{senha}'")
-        
-        if user.usuario_senha == senha:
-            return Response({"message": "Login bem-sucedido"}, status=status.HTTP_200_OK)
-        else:
-            return Response({"message": "Senha incorreta"}, status=status.HTTP_401_UNAUTHORIZED)
-    
-    return Response({"message": "Usuário não encontrado"}, status=status.HTTP_404_NOT_FOUND)
-
 
 
 
 @api_view(['POST'])
 def cadastro(request):
     usuario_nome = request.data.get('usuario_nome')
-    if Jogo_final.objects.filter(usuario_nome=usuario_nome).exists():
-        return Response({"Usuário já existe, troque de nome"}, status=status.HTTP_400_BAD_REQUEST)
-    serializer = Jogo_finalSerializer(data=request.data)
-    if serializer.is_valid():
-        serializer.save()
-        return Response({"user": serializer.data}, status=status.HTTP_201_CREATED)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    usuario_senha = request.data.get('usuario_senha')
+    user_id = request.data.get('user')  # ID do usuário para atualizar, se necessário
+
+    # Se o ID do usuário for fornecido, tenta atualizar o usuário existente
+    if user_id:
+        try:
+            user = User.objects.get(id=int(user_id))  # Converte para inteiro
+            user.username = usuario_nome
+            user.set_password(usuario_senha)  # Atualiza a senha
+            user.save()
+        except User.DoesNotExist:
+            return Response({"user": "Invalid pk - object does not exist."}, status=status.HTTP_400_BAD_REQUEST)
+    else:
+        # Verifica se o nome de usuário já existe
+        if User.objects.filter(username=usuario_nome).exists():
+            return Response({"Usuário já existe, troque de nome"}, status=status.HTTP_400_BAD_REQUEST)
+        
+        # Cria um novo usuário
+        user = User.objects.create(username=usuario_nome)
+        user.set_password(usuario_senha)
+        user.save()
+
+    # Cria ou atualiza o registro em Dados_jogo
+    jogo_final, created = Dados_jogo.objects.update_or_create(
+        user=user,
+        defaults={
+            'usuario_nome': usuario_nome,
+            'usuario_senha': usuario_senha,
+        }
+    )
+
+    serializer = Jogo_finalSerializer(jogo_final)
+    return Response(serializer.data, status=status.HTTP_201_CREATED if created else status.HTTP_200_OK)
 
 @api_view(['GET'])
 def token(request):
     return Response({})
-
-@api_view(['POST'])
-def logout_view(request):
-    logout(request)
-    return Response(status=status.HTTP_200_OK)
-
-def login_page(request):
-    return render(request, 'login.html')
 
 
 def main_page(request):
@@ -74,6 +76,19 @@ def main_page(request):
 
 def stats_page(request):
     return render(request, 'stats.html')
+
+def update_jogo_final(request, id):
+    try:
+        jogo_final = Dados_jogo.objects.get(id=id)
+    except Dados_jogo.DoesNotExist:
+        return Response({"message": "Registro não encontrado"}, status=status.HTTP_404_NOT_FOUND)
+
+    serializer = Jogo_finalSerializer(jogo_final, data=request.data, partial=True)
+    if serializer.is_valid():
+        serializer.save()
+        return Response({"user": serializer.data}, status=status.HTTP_200_OK)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 
 

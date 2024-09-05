@@ -1,7 +1,7 @@
 from rest_framework import serializers
-from .models import Jogo_final
+from .models import Dados_jogo
 
 class Jogo_finalSerializer(serializers.ModelSerializer):
     class Meta:
-        model =Jogo_final
-        fields = ('id_usuario', 'usuario_nome', 'usuario_senha', 'dinheiro', 'tempo', 'inimigos_derrotados')
+        model =Dados_jogo
+        fields = ('id', 'user', 'usuario_nome', 'usuario_senha', 'dinheiro', 'tempo', 'inimigos_derrotados')

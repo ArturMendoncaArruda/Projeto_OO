@@ -22,13 +22,22 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="{% url 'stats-page' %}">Estatísticas <span class="sr-only">(página atual)</span></a>
                 </li>
+                {% if user.is_authenticated %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'login-page' %}">Login</a>
+                    <form method="POST" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn nav-link">Sair</button>
+                    </form>
                 </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login' %}">Login</a>
+                </li>
+                {% endif %}
             </ul>
         </div>
     </nav>
-
+    
     <div class="container mt-4">
         <h1 class="text-center">Estatísticas do Jogo</h1>
         <p class="text-center">Aqui você pode ver as estatísticas do jogador, como horas jogadas e outras informações.</p>
