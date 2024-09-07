@@ -43,24 +43,188 @@ body {
     padding: 0;
 }
 
-.navbar {
-    background-color:#9C8ADE;
-    color: #4A90E2;
-    padding: 15px;
-    text-align: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+
+
+.profile-content {
+    background-image: url('/static/images/profile_background.jpg');
+    background-size: cover;
+    background-position: center;
+    padding: 20px;
+    border-radius: 10px;
+    color: #ffffff;
 }
 
+.navbar {
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    background-color: #9C8ADE;
+    color: #ffffff;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Sombra mais intensa */
+    transition: background-color 0.5s ease, box-shadow 0.5s ease;;
+}
+
+.navbar a {
+    color: #ffffff;
+    text-decoration: none;
+    margin: 0 15px;
+    font-size: 18px;
+    font-weight: bold;
+    position: relative;
+    padding-bottom: 5px;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.navbar a:hover {
+    color: #F0F0F0; 
+    transform: scale(1.05); 
+}
+
+.navbar a::after {
+    content: '';
+    display: block;
+    width: 0;
+    height: 2px;
+    background: #F0F0F0;
+    transition: width 0.3s ease; 
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+.navbar a:hover::after {
+    width: 100%; 
+}
+
+@keyframes slideDown {
+    from {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.navbar {
+    animation: slideDown 0.8s ease-out; /* Animação ao carregar a página */
+}
+
+/* Animação de ícones dentro da navbar */
+.navbar i {
+    margin-left: 10px;
+    font-size: 20px;
+    transition: transform 0.3s ease;
+}
+
+/* Girar o ícone no hover */
+.navbar i:hover {
+    transform: rotate(360deg); /* Ícones fazem uma rotação completa ao passar o mouse */
+}
+
+/* Background com efeito de gradiente animado */
+@keyframes gradientBackground {
+    0% {
+        background-color: #9C8ADE;
+    }
+    50% {
+        background-color: #A76CC7;
+    }
+    100% {
+        background-color: #9C8ADE;
+    }
+}
+
+.navbar {
+    animation: gradientBackground 5s infinite; /* Gradiente animado que se altera continuamente */
+}
+
+/* Animação para aparecer quando a navbar rolar junto com a página */
+.navbar-scroll {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: rgba(156, 138, 222, 0.9); /* Navbar semi-transparente ao rolar */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.navbar-scroll .navbar a {
+    color: #ffffff;
+}
+
+.navbar-scroll:hover {
+    background-color: rgba(166, 108, 199, 1); /* Torna a navbar opaca ao hover */
+}
 .login-container {
-    background-color: transparent;
-    border: 1px solid #cccccc;;
+    position: relative;
+    border: 2px solid transparent;
     border-radius: 10px;
-    backdrop-filter: blur(10px);
-    box-shadow: 0 4px 8px rgba(14, 194, 225, 0.2);
     padding: 40px;
     margin: auto;
     max-width: 350px;
+    background-color: transparent;
+    box-shadow: 0 4px 8px rgba(128, 128, 128, 0.5);
+    backdrop-filter: blur(10px); /* Efeito de desfoque */
+    overflow: hidden; /* Garante que a borda animada não ultrapasse os limites do container */
 }
+
+.login-container::before, .login-container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 2px solid;
+    border-radius: 10px;
+    pointer-events: none;
+    animation: borderAnimation 3s linear infinite;
+    z-index: 1;
+}
+
+@keyframes borderAnimation {
+    0% {
+        border-color: rgba(255, 0, 0, 0.5); /* Cor vermelha */
+    }
+    25% {
+        border-color: rgba(0, 255, 0, 0.5); /* Cor verde */
+    }
+    50% {
+        border-color: rgba(0, 0, 255, 0.5); /* Cor azul */
+    }
+    75% {
+        border-color: rgba(255, 255, 0, 0.5); /* Cor amarela */
+    }
+    100% {
+        border-color: rgba(255, 0, 0, 0.5); /* Retorna à cor vermelha */
+    }
+}
+
+.login-container form {
+    position: relative;
+    z-index: 2; /* Faz o formulário aparecer sobre a borda animada */
+}
+
+.login-container {
+    animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 /* Para outras páginas, remova o estilo do container */
 .container:not(.login-container) {
     background-color: transparent; /* Remove o fundo branco */
@@ -103,4 +267,145 @@ h2.text-center {
     background-color: transparent;
     border-color: #ffffff; 
     outline: none; 
+    border-color: #007bff; /* Borda azul ao focar */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Sombra azul */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
+
+/* Estilos para o accordion */
+.accordion {
+    width: 300px; /* Defina a largura do accordion */
+    margin-left: 0; /* Alinhe o accordion à esquerda */
+    margin-right: auto; /* Centralize horizontalmente se necessário */
+}
+
+.accordion .card-header {
+    background-color: #9C8ADE; /* Cor de fundo do cabeçalho do accordion */
+    color: #ffffff; /* Cor do texto do cabeçalho */
+}
+
+.accordion .btn-link {
+    color: #ffffff; /* Cor do texto do botão */
+}
+
+.accordion .card-body {
+    background-color: #f8f9fa; /* Cor de fundo do corpo do accordion */
+    color: #000000; /* Cor do texto do corpo */
+}
+
+/* Opcional: estilo para o botão de link do accordion quando clicado */
+.accordion .btn-link:focus, 
+.accordion .btn-link:hover {
+    color: #ffffff; /* Cor do texto do botão quando em foco ou hover */
+    text-decoration: none; /* Remove o sublinhado do link */
+}
+
+/* Estilo específico para o botão 'Deletar Conta' */
+.accordion .btn-delete-account {
+    background-color: #ff4d4d; /* Cor vermelha */
+    color: #ffffff; /* Cor do texto em branco */
+    border: none; /* Remover bordas */
+    padding: 10px; /* Ajustar o espaçamento interno */
+    border-radius: 5px; /* Cantos arredondados */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.accordion .btn-delete-account i {
+    margin-right: 5px; /* Espaçamento entre o ícone e o texto */
+    color: #ffffff; /* Cor do ícone branco */
+}
+
+.accordion .btn-delete-account:hover {
+    background-color: #e60000; /* Efeito hover - Vermelho mais escuro */
+    color: #ffffff; /* Cor do texto continua branco */
+    text-decoration: none; /* Remove sublinhado */
+}
+
+.accordion .card {
+    margin-bottom: 20px; /* Espaçamento entre os itens do accordion */
+}
+
+.accordion .card-body {
+    padding: 15px;
+}
+
+.accordion .card-header {
+    padding: 10px 20px;
+    background-color: #a172c1; /* Fundo roxo */
+    color: #fff;
+    border: none;
+}
+
+.accordion .card-header {
+    background: linear-gradient(45deg, #a172c1, #7928ca); /* Gradiente roxo */
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out, transform 0.3s ease; /* Transição suave */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra */
+}
+
+.accordion .card-header:hover {
+    background: linear-gradient(45deg, #7928ca, #a172c1); /* Inverte gradiente no hover */
+    transform: scale(1.02); /* Pequeno efeito de zoom */
+}
+
+.accordion .card-body {
+    background-color: #f7f7f7;
+    color: #333;
+    border-radius: 5px;
+    box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra interna */
+    animation: fadeIn 0.5s ease-in-out; /* Animação de fade-in */
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Botões internos */
+.accordion .btn {
+    margin-right: 10px;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease;
+}
+
+.accordion .btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Botão 'Deletar Conta' com efeito especial */
+.accordion .btn-delete-account {
+    background-color: #ff4d4d;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    transition: all 0.4s ease;
+    box-shadow: 0 4px 8px rgba(255, 77, 77, 0.4);
+}
+
+.accordion .btn-delete-account:hover {
+    background-color: #ff1a1a; /* Vermelho mais forte no hover */
+    box-shadow: 0 8px 16px rgba(255, 77, 77, 0.6);
+    transform: scale(1.05);
+}
+
+.collapse {
+    transition: height 0.5s ease;
+}
+
+.accordion .card-header::after {
+    content: '\f078'; /* Ícone de seta para baixo */
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    float: right;
+    transition: transform 0.3s ease;
+}
+
+.accordion .card-header.collapsed::after {
+    transform: rotate(-90deg); /* Roda a seta ao colapsar */
+}
+
+

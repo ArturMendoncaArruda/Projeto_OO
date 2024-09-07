@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página Inicial</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
@@ -35,14 +36,25 @@
             </li>
             {% endif %}
         </ul>
+
+        <!-- Ícone de perfil alinhado à direita -->
+        {% if user.is_authenticated %}
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'profile' %}">
+                    <i class='bx bx-user-circle'></i> {{ user.username|truncatechars:9 }}
+                </a>
+            </li>
+        </ul>
+        {% endif %}
     </div>
 </nav>
+
 <div class="container mt-4">
     <h1 class="text-center">Bem-vindo à Página Inicial!</h1>
     <p class="text-center">Aqui você encontrará as informações principais do nosso jogo.</p>
     <!-- Adicione mais conteúdo aqui -->
 </div>
-
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>

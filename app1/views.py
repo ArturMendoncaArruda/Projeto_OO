@@ -12,6 +12,13 @@ from django.contrib.auth import logout
 from django.contrib.auth import authenticate, login
 from django.shortcuts import redirect
 from django.contrib.auth import logout as auth_logout
+from django.http import JsonResponse
+from django.middleware.csrf import get_token
+from django.contrib.auth.forms import UserChangeForm
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib import messages
 
 class UserlistCreate(generics.ListCreateAPIView):
     queryset = Dados_jogo.objects.all()
@@ -77,6 +84,69 @@ def main_page(request):
 def stats_page(request):
     return render(request, 'stats.html')
 
+#Parte do perfil
+
+@login_required
+def profile_page(request):
+    return render(request, 'profile.html')
+
+
+
+@login_required
+def edit_profile(request):
+    if request.method == 'POST':
+        # Atualiza o perfil do usuário
+        username = request.POST.get('username')
+        request.user.username = username
+        request.user.save()
+
+        # Atualiza os dados no modelo Dados_jogo
+        dados_jogo, created = Dados_jogo.objects.get_or_create(user=request.user)
+        dados_jogo.usuario_nome = username
+        dados_jogo.save()
+
+        messages.success(request, 'Perfil atualizado com sucesso!')
+        return redirect('profile')
+    return render(request, 'username.html')
+
+    
+    
+@login_required
+def change_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(user=request.user, data=request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user) 
+            
+            # Atualiza o campo usuario_senha no modelo Dados_jogo
+            try:
+                dados_jogo = Dados_jogo.objects.get(user=request.user)
+                dados_jogo.usuario_senha = form.cleaned_data['new_password1']
+                dados_jogo.save()
+            except Dados_jogo.DoesNotExist:
+                messages.error(request, 'Erro ao encontrar os dados do jogo.')
+            
+            messages.success(request, 'Senha alterada com sucesso!')
+            return redirect('profile')
+        else:
+            print(form.errors)  # Verifique o terminal/log para erros
+            messages.error(request, 'Erro ao alterar a senha.')
+    else:
+        form = PasswordChangeForm(user=request.user)
+    
+    return render(request, 'password.html', {'form': form})
+
+@login_required
+def delete_account(request):
+    user = request.user
+    user.delete()
+    logout(request)  
+    return redirect('main-page')   
+
+
+
+
 def update_jogo_final(request, id):
     try:
         jogo_final = Dados_jogo.objects.get(id=id)
@@ -90,7 +160,8 @@ def update_jogo_final(request, id):
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-
+def csrf_token_view(request):
+    return JsonResponse({'csrfToken': get_token(request)})
 
 
 
