@@ -14,7 +14,7 @@ from django.shortcuts import redirect
 from django.contrib.auth import logout as auth_logout
 from django.http import JsonResponse
 from django.middleware.csrf import get_token
-from django.contrib.auth.forms import UserChangeForm
+from django.contrib.auth.forms import UserChangeForm, UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
@@ -81,14 +81,55 @@ def token(request):
 def main_page(request):
     return render(request, 'index.html')
 
+@login_required
 def stats_page(request):
-    return render(request, 'stats.html')
+    if request.user.is_authenticated:
+        try:
+            dados_jogo = Dados_jogo.objects.get(user=request.user)
+        except Dados_jogo.DoesNotExist:
+            dados_jogo = None
+    else:
+        dados_jogo = None
+
+    return render(request, 'stats.html', {'dados_jogo': dados_jogo})
+
+def sign_in(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()  # Cria o usuário
+            # Cria um registro na tabela Dados_jogo para o novo usuário
+            Dados_jogo.objects.create(
+                user=user,
+                usuario_nome=user.username,
+                usuario_senha=form.cleaned_data['password1'],  # Ou defina a senha como vazio
+                dinheiro=0,  # Ou defina os valores padrão desejados
+                tempo=0,
+                inimigos_derrotados=0
+            )
+            messages.success(request, 'Cadastro realizado com sucesso!')
+            return redirect('login')  # Redireciona para a página de login após cadastro
+    else:
+        form = UserCreationForm()
+
+    return render(request, 'sign_in.html', {'form': form})
 
 #Parte do perfil
 
 @login_required
 def profile_page(request):
-    return render(request, 'profile.html')
+    user = request.user
+    try:
+        dados_jogo = Dados_jogo.objects.get(user=user)
+    except Dados_jogo.DoesNotExist:
+        dados_jogo = None  
+    
+    context = {
+        'user': user,
+        'dados_jogo': dados_jogo,
+    }
+    
+    return render(request, 'profile.html', context)
 
 
 

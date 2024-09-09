@@ -8,56 +8,129 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <style>
+        .image-text-block {
+            margin-bottom: 50px; /* Espaçamento entre as seções */
+        }
+        .image-text-block img {
+            max-width: 100%;
+            height: auto;
+        }
+        .image-text-block p {
+            margin: 10px 0;
+        }
+        .image-left .text {
+            order: 2; /* Texto depois da imagem */
+        }
+        .image-left .image {
+            order: 1; /* Imagem antes do texto */
+        }
+        .image-right .text {
+            order: 1; /* Texto antes da imagem */
+        }
+        .image-right .image {
+            order: 2; /* Imagem depois do texto */
+        }
+    </style>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark">
-    <a class="navbar-brand" href="{% url 'main-page' %}">Página Inicial</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-            <li class="nav-item active">
-                <a class="nav-link" href="{% url 'main-page' %}">Início <span class="sr-only">(página atual)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'stats-page' %}">Estatísticas</a>
-            </li>
+        <a class="navbar-brand" href="{% url 'main-page' %}">Página Inicial</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'main-page' %}">Início <span class="sr-only">(página atual)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'stats-page' %}">Estatísticas</a>
+                </li>
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <form method="POST" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn nav-link">Sair</button>
+                    </form>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login' %}">Login</a>
+                </li>
+                {% endif %}
+            </ul>
+
+            <!-- Ícone de perfil alinhado à direita -->
             {% if user.is_authenticated %}
-            <li class="nav-item">
-                <form method="POST" action="{% url 'logout' %}">
-                    {% csrf_token %}
-                    <button type="submit" class="btn nav-link">Sair</button>
-                </form>
-            </li>
-            {% else %}
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'login' %}">Login</a>
-            </li>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'profile' %}">
+                        <i class='bx bx-user-circle'></i> {{ user.username|truncatechars:9 }}
+                    </a>
+                </li>
+            </ul>
             {% endif %}
-        </ul>
+        </div>
+    </nav>
 
-        <!-- Ícone de perfil alinhado à direita -->
-        {% if user.is_authenticated %}
-        <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'profile' %}">
-                    <i class='bx bx-user-circle'></i> {{ user.username|truncatechars:9 }}
-                </a>
-            </li>
-        </ul>
-        {% endif %}
+    <div class="container mt-4">
+        <h1 class="text-center">Bem-vindo à Página Inicial!</h1>
+        <p class="text-center">Aqui você encontrará as informações principais do nosso jogo.</p>
+
+        <!-- Imagem 1: Esquerda - Texto: Direita -->
+        <div class="row image-text-block image-left">
+            <div class="col-md-6 image">
+                <img src="{% static 'images/game_image1.jpg' %}" alt="Imagem do Jogo 1">
+            </div>
+            <div class="col-md-6 text">
+                <p>Imagem 1: Descrição sobre esta fase.</p>
+            </div>
+        </div>
+
+        <!-- Imagem 2: Direita - Texto: Esquerda -->
+        <div class="row image-text-block image-right">
+            <div class="col-md-6 text">
+                <p>Imagem 2: Uma batalha épica!</p>
+            </div>
+            <div class="col-md-6 image">
+                <img src="{% static 'images/game_image2.jpg' %}" alt="Imagem do Jogo 2">
+            </div>
+        </div>
+
+        <!-- Imagem 3: Esquerda - Texto: Direita -->
+        <div class="row image-text-block image-left">
+            <div class="col-md-6 image">
+                <img src="{% static 'images/game_image3.jpg' %}" alt="Imagem do Jogo 3">
+            </div>
+            <div class="col-md-6 text">
+                <p>Imagem 3: Um cenário incrível!</p>
+            </div>
+        </div>
+
+        <!-- Imagem 4: Direita - Texto: Esquerda -->
+        <div class="row image-text-block image-right">
+            <div class="col-md-6 text">
+                <p>Imagem 4: Explore novos mundos.</p>
+            </div>
+            <div class="col-md-6 image">
+                <img src="{% static 'images/game_image4.jpg' %}" alt="Imagem do Jogo 4">
+            </div>
+        </div>
+
+        <!-- Imagem 5: Esquerda - Texto: Direita -->
+        <div class="row image-text-block image-left">
+            <div class="col-md-6 image">
+                <img src="{% static 'images/game_image5.jpg' %}" alt="Imagem do Jogo 5">
+            </div>
+            <div class="col-md-6 text">
+                <p>Imagem 5: Missão secreta!</p>
+            </div>
+        </div>
     </div>
-</nav>
 
-<div class="container mt-4">
-    <h1 class="text-center">Bem-vindo à Página Inicial!</h1>
-    <p class="text-center">Aqui você encontrará as informações principais do nosso jogo.</p>
-    <!-- Adicione mais conteúdo aqui -->
-</div>
-
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

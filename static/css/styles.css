@@ -36,6 +36,7 @@
 
 /* Outros estilos */
 body {
+    color: #ffffff ;
     background-image: url('/static/images/background.jpg');
     background-size: cover; 
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -43,10 +44,56 @@ body {
     padding: 0;
 }
 
+/* Adiciona sombra ao texto para dar um efeito de destaque */
+h1, h2, h3, h4, h5, h6, p, a {
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); /* Sombra sutil no texto */
+    transition: text-shadow 0.3s ease-in-out; /* Transição suave para a sombra */
+}
 
+/* Efeito hover para os links */
+a:hover {
+    color: #ffff99; /* Um branco amarelado ao passar o mouse */
+    text-shadow: 2px 2px 10px rgba(255, 255, 255, 0.7); /* Aumenta a sombra ao passar o mouse */
+}
+
+/* Animação no texto ao passar o mouse */
+h1:hover, h2:hover, h3:hover {
+    transform: scale(1.05); /* Aumenta o tamanho do texto ligeiramente */
+    text-shadow: 4px 4px 10px rgba(255, 255, 255, 0.9); /* Destaca ainda mais a sombra */
+    transition: transform 0.2s ease-in-out, text-shadow 0.2s ease-in-out;
+}
+
+.list-group {
+    background-color: rgba(128, 90, 213, 0.9); /* Fundo roxo translúcido */
+    border-radius: 10px; /* Bordas arredondadas */
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2); /* Sombra suave */
+}
+
+.list-group-item {
+    background-color: rgba(128, 90, 213, 0.8); /* Mantém o tom translúcido nos itens */
+    color: #ffffff; /* Texto branco */
+    border: none; /* Remove bordas dos itens */
+}
+
+.badge {
+    background-color: #4CAF50; /* Cor de destaque para os valores (você pode ajustar conforme o gosto) */
+    color: white; /* Cor do texto da badge */
+    font-weight: bold; /* Texto em negrito */
+}
+
+h1, p {
+    color: #ffffff; /* Mantém o texto branco */
+}
+
+/* Adicionando um efeito hover nos itens para realce */
+.list-group-item:hover {
+    background-color: rgba(128, 90, 213, 1); /* Mais opaco ao passar o mouse */
+    transition: background-color 0.3s ease; /* Transição suave */
+}
 
 
 .profile-content {
+    padding-top: 70px; 
     background-image: url('/static/images/profile_background.jpg');
     background-size: cover;
     background-position: center;
@@ -231,6 +278,7 @@ body {
     border-radius: 0; /* Remove o arredondamento dos cantos */
     box-shadow: none; /* Remove a sombra */
     padding: 0; /* Remove o padding */
+    
 }
 
 /* Estilo para o botão de submit */
@@ -407,5 +455,6 @@ h2.text-center {
 .accordion .card-header.collapsed::after {
     transform: rotate(-90deg); /* Roda a seta ao colapsar */
 }
+
 
 
