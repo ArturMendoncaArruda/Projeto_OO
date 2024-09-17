@@ -19,6 +19,9 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib import messages
+from app1.utils.feedback import get_user_feedback
+from django.core.mail import send_mail
+from django.conf import settings
 
 class UserlistCreate(generics.ListCreateAPIView):
     queryset = Dados_jogo.objects.all()
@@ -171,7 +174,7 @@ def change_password(request):
             messages.success(request, 'Senha alterada com sucesso!')
             return redirect('profile')
         else:
-            print(form.errors)  # Verifique o terminal/log para erros
+            print(form.errors)  
             messages.error(request, 'Erro ao alterar a senha.')
     else:
         form = PasswordChangeForm(user=request.user)
@@ -203,6 +206,31 @@ def update_jogo_final(request, id):
 
 def csrf_token_view(request):
     return JsonResponse({'csrfToken': get_token(request)})
+
+@login_required
+def feedback_page(request):
+    if request.method == 'POST':
+        rating = request.POST.get('rating')
+        content = request.POST.get('content')
+
+        if not rating:
+            messages.error(request, 'Por favor, escolha uma avaliação com estrelas.')
+            return render(request, 'feedback.html')
+        
+       
+        send_mail(
+            subject=f'Novo Feedback - {rating} Estrelas',
+            message=f'O usuário {request.user.username} enviou a seguinte avaliação:\n\n'
+                    f'Avaliação: {rating} estrelas\n'
+                    f'Comentário: {content}',
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=['suporteoo779@gmail.com'],
+        )
+
+        messages.success(request, 'Feedback enviado com sucesso!')
+        return render(request, 'feedback.html')
+
+    return render(request, 'feedback.html')
 
 
 

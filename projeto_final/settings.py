@@ -89,7 +89,7 @@ WSGI_APPLICATION = 'projeto_final.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',  # Substitua pelo nome real do banco de dados, se diferente
+        'NAME': 'postgres',  
         'USER': 'postgres',
         'PASSWORD': 'pCjiyjY1u6oeYz1H',
         'HOST': 'ceaselessly-smashing-treefrog.data-1.use1.tembo.io',
@@ -151,3 +151,10 @@ LOGIN_REDIRECT_URL = 'main-page'
 LOGIN_URL = 'login'
 LOGOUT_REDIRECT_URL = 'main-page'
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'  
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'suporteoo779@gmail.com'
+EMAIL_HOST_PASSWORD = 'doqw zjrt odrm zslf'
+DEFAULT_FROM_EMAIL = 'suporteoo779@gmail.com'

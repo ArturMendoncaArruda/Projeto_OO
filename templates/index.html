@@ -33,7 +33,7 @@
         }
     </style>
 </head>
-<body>
+<body class="index-page">
     <nav class="navbar navbar-expand-lg navbar-dark">
         <a class="navbar-brand" href="{% url 'main-page' %}">Página Inicial</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -48,6 +48,14 @@
                     <a class="nav-link" href="{% url 'stats-page' %}">Estatísticas</a>
                 </li>
                 {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'feedback-page' %}">Feedback</a>
+                </li>
+                {% if user.is_superuser %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'admin:index' %}">Admin</a>
+                </li>
+                {% endif %}    
                 <li class="nav-item">
                     <form method="POST" action="{% url 'logout' %}">
                         {% csrf_token %}
@@ -72,65 +80,81 @@
             </ul>
             {% endif %}
         </div>
+        <div class="highlight"></div>
     </nav>
 
     <div class="container mt-4">
         <h1 class="text-center">Bem-vindo à Página Inicial!</h1>
         <p class="text-center">Aqui você encontrará as informações principais do nosso jogo.</p>
-
-        <!-- Imagem 1: Esquerda - Texto: Direita -->
+    
+        <!-- Imagem 1: Esquerda - Texto: Direita (Neon roxo) -->
         <div class="row image-text-block image-left">
-            <div class="col-md-6 image">
-                <img src="{% static 'images/game_image1.jpg' %}" alt="Imagem do Jogo 1">
+            <div class="col-md-6">
+                <div class="box">
+                    <img src="{% static 'images/gif_1.gif' %}" alt="Imagem do Jogo 1">
+                </div>
             </div>
-            <div class="col-md-6 text">
-                <p>Imagem 1: Descrição sobre esta fase.</p>
+            <div class="col-md-6">
+                <div class="box">
+                    <p>O Forasteiro se ergue contra a vastidão da cidade, sua figura um reflexo da esperança em meio à decadência. Cada salto não é apenas um movimento, mas uma afirmação de que até mesmo nas alturas mais arriscadas, ele continua a lutar pela justiça. "É no ar que a liberdade começa, e mesmo as sombras não podem esconder o brilho de quem salta com propósito."
+
+                    </p>
+                </div>
             </div>
         </div>
-
-        <!-- Imagem 2: Direita - Texto: Esquerda -->
+    
+        <!-- Imagem 2: Direita - Texto: Esquerda (Neon azul) -->
         <div class="row image-text-block image-right">
-            <div class="col-md-6 text">
-                <p>Imagem 2: Uma batalha épica!</p>
+            <div class="col-md-6">
+                <div class="box">
+                    <p>Quando o Forasteiro se depara com um novo adversário, o confronto é inevitável. Este não é apenas mais um mafioso; é uma peça chave na engrenagem de uma organização implacável. Vestido com um chapéu fedora e empunhando uma Tommygun, o inimigo representa a força bruta e a crueldade que domina as ruas. O Forasteiro, porém, enfrenta-o com a mesma intensidade, transformando o combate em uma dança brutal de habilidades e força. "Em cada confronto, o adversário é um espelho das nossas próprias forças e fraquezas, e é através da batalha que descobrimos quem realmente somos."</p>
+                </div>
             </div>
-            <div class="col-md-6 image">
-                <img src="{% static 'images/game_image2.jpg' %}" alt="Imagem do Jogo 2">
+            <div class="col-md-6">
+                <div class="box">
+                    <img src="{% static 'images/gif_2.gif' %}" alt="Imagem do Jogo 2">
+                </div>
             </div>
         </div>
-
-        <!-- Imagem 3: Esquerda - Texto: Direita -->
+    
+        <!-- Imagem 3: Esquerda - Texto: Direita (Neon verde) -->
         <div class="row image-text-block image-left">
-            <div class="col-md-6 image">
-                <img src="{% static 'images/game_image3.jpg' %}" alt="Imagem do Jogo 3">
+            <div class="col-md-6">
+                <div class="box">
+                    <img src="{% static 'images/gif_3.gif' %}" alt="Imagem do Jogo 3">
+                </div>
             </div>
-            <div class="col-md-6 text">
-                <p>Imagem 3: Um cenário incrível!</p>
+            <div class="col-md-6">
+                <div class="box">
+                    <p>Ao completar uma rodada, o Forasteiro entra em uma área segura, onde encontra o Mercante. Este não tem um balcão; ao invés disso, ele permanece nas sombras, uma figura enigmática com uma máscara que oculta seu rosto. Quando o Forasteiro se aproxima, o Mercante abre sua jaqueta, revelando uma coleção de itens e armas incomuns. Ele não fala, apenas observa através de sua máscara enquanto o Forasteiro escolhe suas próximas aquisições. "Há poder em cada escolha silenciosa; não é o que se compra, mas o que se carrega dentro que define o próximo passo."
+
+
+
+
+
+                    </p>
+                </div>
             </div>
         </div>
-
-        <!-- Imagem 4: Direita - Texto: Esquerda -->
+    
+        <!-- Imagem 4: Direita - Texto: Esquerda (Neon vermelho) -->
         <div class="row image-text-block image-right">
-            <div class="col-md-6 text">
-                <p>Imagem 4: Explore novos mundos.</p>
+            <div class="col-md-6">
+                <div class="box">
+                    <p>Em algum ponto, o Forasteiro encontra o fim. Enfraquecido pelas incessantes ondas de inimigos, ele finalmente cai. O cenário ao redor dele é desolado, mas a queda não parece ser o fim. "O fim de uma jornada nunca é o silêncio eterno; às vezes, é apenas o sussurro de um novo começo."</p>
+                </div>
             </div>
-            <div class="col-md-6 image">
-                <img src="{% static 'images/game_image4.jpg' %}" alt="Imagem do Jogo 4">
-            </div>
-        </div>
-
-        <!-- Imagem 5: Esquerda - Texto: Direita -->
-        <div class="row image-text-block image-left">
-            <div class="col-md-6 image">
-                <img src="{% static 'images/game_image5.jpg' %}" alt="Imagem do Jogo 5">
-            </div>
-            <div class="col-md-6 text">
-                <p>Imagem 5: Missão secreta!</p>
+            <div class="col-md-6">
+                <div class="box">
+                    <img src="{% static 'images/gif_4.gif' %}" alt="Imagem do Jogo 4">
+                </div>
             </div>
         </div>
-    </div>
+    
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="{% static 'js/efeito_neon.js' %}"></script>
 </body>
 </html>

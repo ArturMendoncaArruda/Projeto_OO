@@ -1,5 +1,5 @@
 from django.urls import path, re_path
-from .views import UserlistCreate, UserRetrieveUpdateDelete, main_page, stats_page, profile_page, edit_profile, change_password, delete_account, sign_in
+from .views import UserlistCreate, UserRetrieveUpdateDelete, main_page, stats_page, profile_page, edit_profile, change_password, delete_account, sign_in, feedback_page
 from django.contrib.auth.views import LoginView, LogoutView
 from . import views
 from .views import csrf_token_view
@@ -15,6 +15,7 @@ urlpatterns = [
     path('edit-profile/', edit_profile, name='edit-profile'),
     path('change-password/', change_password, name='change-password'),
     path('delete-account/', delete_account, name='delete-account'),
+    path('feedback-page/', feedback_page, name='feedback-page'),
     # Login e Logout padrão do Django
     path('login/', LoginView.as_view(template_name='login.html'), name='login'),
     path('logout/', LogoutView.as_view(next_page='main-page'), name='logout'),

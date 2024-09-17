@@ -92,28 +92,34 @@ h1, p {
 }
 
 
-.profile-content {
-    padding-top: 70px; 
+.profile-content { 
     background-image: url('/static/images/profile_background.jpg');
-    background-size: cover;
-    background-position: center;
-    padding: 20px;
-    border-radius: 10px;
+    background-size: cover; 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #ffffff;
+    
+}
+
+.stats-content {
+    background-image: url('/static/images/stats_background.gif');
+    background-size: cover; 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
     color: #ffffff;
 }
 
-.navbar {
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 1000;
-    background-color: #9C8ADE;
+.feedback-content {
+    background-image: url('/static/images/feedback_background.gif');
+    background-size: cover; 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
     color: #ffffff;
-    padding: 15px;
-    text-align: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Sombra mais intensa */
-    transition: background-color 0.5s ease, box-shadow 0.5s ease;;
 }
+
 
 .navbar a {
     color: #ffffff;
@@ -158,9 +164,7 @@ h1, p {
     }
 }
 
-.navbar {
-    animation: slideDown 0.8s ease-out; /* Animação ao carregar a página */
-}
+
 
 /* Animação de ícones dentro da navbar */
 .navbar i {
@@ -174,39 +178,6 @@ h1, p {
     transform: rotate(360deg); /* Ícones fazem uma rotação completa ao passar o mouse */
 }
 
-/* Background com efeito de gradiente animado */
-@keyframes gradientBackground {
-    0% {
-        background-color: #9C8ADE;
-    }
-    50% {
-        background-color: #A76CC7;
-    }
-    100% {
-        background-color: #9C8ADE;
-    }
-}
-
-.navbar {
-    animation: gradientBackground 5s infinite; /* Gradiente animado que se altera continuamente */
-}
-
-/* Animação para aparecer quando a navbar rolar junto com a página */
-.navbar-scroll {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    background-color: rgba(156, 138, 222, 0.9); /* Navbar semi-transparente ao rolar */
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.navbar-scroll .navbar a {
-    color: #ffffff;
-}
-
-.navbar-scroll:hover {
-    background-color: rgba(166, 108, 199, 1); /* Torna a navbar opaca ao hover */
-}
 .login-container {
     position: relative;
     border: 2px solid transparent;
@@ -456,5 +427,320 @@ h2.text-center {
     transform: rotate(-90deg); /* Roda a seta ao colapsar */
 }
 
+.image-text-block {
+    margin-bottom: 50px; /* Espaçamento entre as seções */
+    perspective: 1000px; /* Adiciona perspectiva para o efeito 3D */
+}
+
+.image-text-block .box {
+    transition: transform 0.5s ease;
+    transform-style: preserve-3d; /* Habilita o efeito 3D */
+}
+
+.image-left .box:hover {
+    transform: rotateY(-20deg); /* Rota à direita quando a imagem está à esquerda */
+}
+
+.image-right .box:hover {
+    transform: rotateY(20deg); /* Rota à esquerda quando a imagem está à direita */
+}
+
+.image-text-block img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+}
+
+.image-text-block p {
+    margin: 10px 0;
+    padding: 10px;
+    background-color: #f8f9fa;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    transition: transform 0.5s ease;
+}
 
 
+.image-text-block p {
+    margin: 10px 0;
+    padding: 10px;
+    background-color: #1a1a1a;
+    background-image: url(https://www.transparenttextures.com/patterns/asfalt-dark.png); /* Textura preta acinzentada */
+    color: white;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    transition: transform 0.5s ease, box-shadow 0.5s ease, color 0.5s ease; /* Transição para o efeito neon */
+}
+
+/* Neon para diferentes caixas de texto ao passar o mouse */
+.image-left .box p:hover {
+    box-shadow: 0 0 20px 8px rgba(138, 43, 226, 0.8); /* Neon roxo */
+    color: #8A2BE2;
+}
+
+.image-right .box p:hover {
+    box-shadow: 0 0 20px 8px rgba(30, 144, 255, 0.8); /* Neon azul */
+    color: #1E90FF;
+}
+
+
+
+
+.image-text-block img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+}
+
+.image-text-block p {
+    background-color: rgba(0, 0, 0, 0.7); /* Fundo escuro semi-transparente */
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Borda sutil */
+    color: white; /* Texto branco */
+    padding: 15px;
+    border-radius: 8px;
+    transition: background 0.5s ease, box-shadow 0.5s ease, color 0.5s ease;
+    position: relative; /* Para criar o efeito neon interno */
+    overflow: hidden; /* Para garantir que o efeito neon não vaze */
+}
+
+.image-text-block p::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: background 0.5s ease;
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* Efeito neon vermelho */
+.image-left .box:hover p {
+    background-color: rgba(255, 0, 0, 0.2); /* Fundo com um tom de vermelho */
+    color: white;
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.6), inset 0 0 10px rgba(255, 0, 0, 0.4); /* Neon vermelho interno */
+}
+
+.image-left .box:hover p::before {
+    background: radial-gradient(circle, rgba(255, 0, 0, 0.5), transparent); /* Efeito neon no fundo ao passar o mouse */
+}
+
+/* Efeito neon azul */
+.image-right .box:hover p {
+    background-color: rgba(0, 0, 255, 0.2); /* Fundo com um tom de azul */
+    color: white;
+    box-shadow: 0 0 20px rgba(0, 0, 255, 0.6), inset 0 0 10px rgba(0, 0, 255, 0.4); /* Neon azul interno */
+}
+
+.image-right .box:hover p::before {
+    background: radial-gradient(circle, rgba(0, 0, 255, 0.5), transparent); /* Efeito neon no fundo ao passar o mouse */
+}
+
+/* Efeito neon verde */
+.image-text-block:nth-child(3) .box:hover p {
+    background-color: rgba(0, 255, 0, 0.2); /* Fundo com um tom de verde */
+    color: white;
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.6), inset 0 0 10px rgba(0, 255, 0, 0.4); /* Neon verde interno */
+}
+
+.image-text-block:nth-child(3) .box:hover p::before {
+    background: radial-gradient(circle, rgba(0, 255, 0, 0.5), transparent); /* Efeito neon no fundo ao passar o mouse */
+}
+
+/* Efeito neon roxo */
+.image-text-block:nth-child(4) .box:hover p {
+    background-color: rgba(128, 0, 255, 0.2); /* Fundo com um tom de roxo */
+    color: white;
+    box-shadow: 0 0 20px rgba(128, 0, 255, 0.6), inset 0 0 10px rgba(128, 0, 255, 0.4); /* Neon roxo interno */
+}
+
+.image-text-block:nth-child(4) .box:hover p::before {
+    background: radial-gradient(circle, rgba(128, 0, 255, 0.5), transparent); /* Efeito neon no fundo ao passar o mouse */
+}
+
+.neon-text {
+    font-size: 24px;
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 0 0 5px rgba(255, 0, 0, 0.8), /* Efeito neon vermelho */
+                 0 0 10px rgba(255, 0, 0, 0.6),
+                 0 0 15px rgba(255, 0, 0, 0.4);
+    transition: text-shadow 0.3s ease;
+    position: relative;
+}
+
+.neon-text.hover {
+    text-shadow: 0 0 10px rgba(255, 0, 0, 0.8), /* Efeito neon quando hover */
+                 0 0 20px rgba(255, 0, 0, 0.6),
+                 0 0 30px rgba(255, 0, 0, 0.4);
+}
+
+
+body.index-page {
+    background-image: url('/static/images/index_background.gif');
+    background-size: cover;
+    background-position: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.navbar {
+    background-color: black;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    padding: 15px;
+}
+
+.navbar a {
+    color: white;
+    font-size: 18px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.8), 
+                 0 0 20px rgba(255, 255, 255, 0.5), 
+                 0 0 30px rgba(255, 255, 255, 0.2);
+    transition: color 0.3s, text-shadow 0.3s;
+}
+
+.navbar a:hover {
+    color: #00ffcc;
+    text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc, 0 0 30px #00ffcc;
+}
+
+.navbar .button {
+    position: relative;
+    padding: 10px 20px;
+    border: none;
+    color: white;
+    background: transparent;
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.navbar .button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.1);
+    transition: width 0.4s ease;
+}
+
+.navbar .button:hover::before {
+    width: 100%;
+}
+
+.navbar .button:hover {
+    color: #ff00cc;
+    box-shadow: 0 0 10px #ff00cc, 0 0 20px #ff00cc;
+}
+
+.dropdown {
+    position: relative;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #333;
+    padding: 10px;
+    box-shadow: 0 0 10px #ff00cc;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.highlight {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* Não interferir na interação com outros elementos */
+    mix-blend-mode: multiply; /* Mescla a cor do destaque com o fundo */
+    transition: background-color 0.2s; /* Transição suave para as mudanças de cor */
+}
+/* Centralizar o accordion da direita */
+.col-md-6 {
+    display: flex;
+    justify-content: center; /* Centraliza o conteúdo horizontalmente */
+}
+
+/* Ajustar a margem inferior dos accordions */
+.container.mt-4 {
+    margin-top: 50px; /* Ajuste conforme necessário para mover os accordions mais para baixo */
+}
+
+/* Ajustar largura dos accordions e garantir alinhamento */
+.accordion {
+    width: 100%; /* Altere para preencher a largura da coluna */
+    max-width: 300px; /* Largura máxima se necessário */
+}
+
+/* Adicione um alinhamento específico para o accordion da direita */
+.col-md-6 .accordion {
+    margin-left: auto; /* Centralize horizontalmente na coluna */
+    margin-right: auto;
+}
+
+/* Efeito Neon para os itens da lista */
+.list-group-item {
+    position: relative;
+    background-color: #222; /* Fundo escuro para destacar o efeito neon */
+    color: #eee; /* Cor do texto */
+    border: none; /* Remover borda padrão */
+    border-radius: 10px; /* Bordas arredondadas */
+    box-shadow: 0 0 5px rgba(255, 0, 255, 0.5); /* Efeito neon suave */
+    transition: box-shadow 0.3s ease-in-out; /* Transição suave para o efeito neon */
+    margin-bottom: 20px;
+}
+
+.list-group-item:hover {
+    box-shadow: 0 0 15px rgba(255, 0, 255, 0.7); /* Efeito neon mais forte no hover */
+}
+
+/* Cor do botão de informações */
+.list-group-item .badge {
+    background-color: #4CAF50; /* Verde para o badge */
+    margin-left: 20px
+}
+
+/* Estilização adicional para melhorar a aparência */
+.list-group-item span.badge {
+    padding: 0.5rem 1rem;
+    border-radius: 10px; /* Bordas arredondadas */
+}
+
+/* Fundo da tabela */
+.container {
+    background-color: #111; /* Fundo escuro para a área da tabela */
+    padding: 2rem;
+    border-radius: 15px; /* Bordas arredondadas do container */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.8); /* Sombra do container */
+}
+
+.text-center {
+    color: #eee; /* Cor do texto centralizado */
+}
+
+.list-group {
+    background-color: transparent; /* Remove o fundo entre os itens */
+    border: none; /* Remove bordas, se houver */
+    padding: 0; /* Remover qualquer preenchimento adicional */
+}

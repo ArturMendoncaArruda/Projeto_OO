@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página de Feedback</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body class="feedback-content">
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand" href="{% url 'main-page' %}">Página Inicial</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'main-page' %}">Início</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'stats-page' %}">Estatísticas</a>
+                </li>
+                {% if user.is_authenticated %}
+                <li class="nav-item"></li>
+                    <a class="nav-link" href="{% url 'feedback-page' %}">Feedback</a>
+                </li>
+                {% if user.is_superuser %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'admin:index' %}">Admin</a>
+                </li>
+                {% endif %} 
+                <li class="nav-item">
+                    <form method="POST" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn nav-link">Sair</button>
+                    </form>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login' %}">Login</a>
+                </li>
+                {% endif %}
+            </ul>
+            {% if user.is_authenticated %}
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'profile' %}">
+                        <i class='bx bx-user-circle'></i> {{ user.username|truncatechars:9 }}
+                    </a>
+                </li>
+            </ul>
+            {% endif %}
+        </div>
+        <div class="highlight"></div>
+    </nav>
+
+    <div class="container mt-4">
+        <h1 class="text-center">Página de Feedback</h1>
+        <div class="row">
+            
+            <div class="col-md-6">
+                <div class="card feedback-card">
+                    <div class="card-header feedback-header">
+                        <h2 class="mb-0">Enviar Feedback</h2>
+                    </div>
+                    <div class="card-body feedback-body">
+                        <form method="POST" action="{% url 'feedback-page' %}">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="rating">Escolha sua avaliação:</label><br>
+                                <div class="rating">
+                                    <input type="radio" id="star5" name="rating" value="5" />
+                                    <label for="star5" title="5 estrelas">★</label>
+                                    <input type="radio" id="star4" name="rating" value="4" />
+                                    <label for="star4" title="4 estrelas">★</label>
+                                    <input type="radio" id="star3" name="rating" value="3" />
+                                    <label for="star3" title="3 estrelas">★</label>
+                                    <input type="radio" id="star2" name="rating" value="2" />
+                                    <label for="star2" title="2 estrelas">★</label>
+                                    <input type="radio" id="star1" name="rating" value="1" />
+                                    <label for="star1" title="1 estrela">★</label>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="content">Comentário:</label>
+                                <textarea id="content" name="content" class="form-control" rows="4" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Enviar Feedback</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+           
+            <div class="col-md-6">
+                {% if feedback %}
+                <div class="card feedback-card">
+                    <div class="card-header feedback-header">
+                        <h2 class="mb-0">Feedback Recebido</h2>
+                    </div>
+                    <div class="card-body feedback-body">
+                        <p>{{ feedback }}</p>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+    <script src="{% static 'js/efeito_neon.js' %}"></script>
+
+    <style>
+        /* Aplicando cor igual à navbar no header do feedback */
+        .feedback-header {
+            background-color: #343a40; /* Mesmo fundo da navbar */
+            color: white;
+        }
+
+        /* Efeito neon suave nas áreas do feedback */
+        .feedback-body {
+            background-color: #222;
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .feedback-body:hover {
+            box-shadow: 0 0 25px rgba(255, 105, 180, 0.6), 0 0 35px rgba(255, 105, 180, 0.4), 0 0 45px rgba(255, 105, 180, 0.2);
+        }
+
+        /* Efeito neon conforme o movimento do mouse */
+        .feedback-body {
+            position: relative;
+        }
+
+        .feedback-body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, #ff00cc, #3333ff);
+            z-index: -1;
+            filter: blur(10px);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .feedback-body:hover::before {
+            opacity: 1;
+        }
+
+        /* Estilo das estrelas */
+        .rating {
+            display: inline-block;
+            direction: rtl;
+        }
+
+        .rating input {
+            display: none;
+        }
+
+        .rating label {
+            font-size: 30px;
+            color: #ddd;
+            cursor: pointer;
+        }
+
+        .rating label:hover,
+        .rating label:hover ~ label,
+        .rating input:checked ~ label {
+            color: gold;
+        }
+        .feedback-body textarea {
+            color: white !important; 
+            
+        }
+    </style>
+
+    <script>
+        // Script para efeito neon dinâmico conforme o movimento do mouse
+        document.querySelector('.feedback-body').addEventListener('mousemove', function(e) {
+            const { offsetX, offsetY } = e;
+            const { clientWidth, clientHeight } = this;
+            const xPos = offsetX / clientWidth * 100;
+            const yPos = offsetY / clientHeight * 100;
+
+            this.style.background = `radial-gradient(circle at ${xPos}% ${yPos}%, #ff00cc, #3333ff)`;
+        });
+
+        document.querySelector('.feedback-body').addEventListener('mouseleave', function() {
+            this.style.background = '#222';
+        });
+    </script>
+</body>
+</html>

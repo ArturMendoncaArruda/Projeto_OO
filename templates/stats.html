@@ -9,7 +9,7 @@
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
-<body>
+<body class="stats-content">
     <nav class="navbar navbar-expand-lg navbar-dark">
         <a class="navbar-brand" href="{% url 'stats-page' %}">Estatísticas</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -24,6 +24,14 @@
                     <a class="nav-link" href="{% url 'stats-page' %}">Estatísticas <span class="sr-only">(página atual)</span></a>
                 </li>
                 {% if user.is_authenticated %}
+                <li class="nav-item"></li>
+                    <a class="nav-link" href="{% url 'feedback-page' %}">Feedback</a>
+                </li>
+                {% if user.is_superuser %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'admin:index' %}">Admin</a>
+                </li>
+                {% endif %} 
                 <li class="nav-item">
                     <form method="POST" action="{% url 'logout' %}">
                         {% csrf_token %}
@@ -46,11 +54,12 @@
             </ul>
             {% endif %}
         </div>
+        <div class="highlight"></div>
     </nav>
     
     <div class="container mt-4">
         <h1 class="text-center">Estatísticas do Jogo</h1>
-        <p class="text-center">Aqui você pode ver as estatísticas do jogador, como horas jogadas e outras informações.</p>
+        <p class="text-center">Aqui você pode ver as estatísticas do jogador, como dinheiro e inimigos derrotados.</p>
     
         {% if dados_jogo %}
             <div class="row justify-content-center">
@@ -59,10 +68,6 @@
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                             Dinheiro
                             <span class="badge badge-primary badge-pill">{{ dados_jogo.dinheiro }}</span>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            Tempo de Jogo
-                            <span class="badge badge-primary badge-pill">{{ dados_jogo.tempo }} horas</span>
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                             Inimigos Derrotados
@@ -80,5 +85,6 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="{% static 'js/efeito_neon.js' %}"></script>
 </body>
 </html>
