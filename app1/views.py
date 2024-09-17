@@ -9,7 +9,7 @@ from django.contrib.auth.hashers import check_password
 from rest_framework import status
 from django.contrib.auth.models import User
 from django.contrib.auth import logout
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login as auth_login
 from django.shortcuts import redirect
 from django.contrib.auth import logout as auth_logout
 from django.http import JsonResponse
@@ -22,6 +22,10 @@ from django.contrib import messages
 from app1.utils.feedback import get_user_feedback
 from django.core.mail import send_mail
 from django.conf import settings
+from django.views.decorators.csrf import csrf_exempt
+import json
+from django.db.models import F
+
 
 class UserlistCreate(generics.ListCreateAPIView):
     queryset = Dados_jogo.objects.all()
@@ -233,8 +237,115 @@ def feedback_page(request):
     return render(request, 'feedback.html')
 
 
+@csrf_exempt
+def aumentar_dinheiro(request):
+    if request.method == 'POST':
+        # Carregar os dados JSON do corpo da requisição
+        try:
+            data = json.loads(request.body.decode('utf-8'))
+        except json.JSONDecodeError:
+            return JsonResponse({"error": "Invalid JSON"}, status=status.HTTP_400_BAD_REQUEST)
+        
+        user_id = data.get('user')
+        valor = data.get('valor')
+
+        # Verificar se o user_id foi fornecido
+        if not user_id:
+            return JsonResponse({"error": "User ID is required"}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Obter o usuário ou retornar 404 se não encontrado
+        user = User.objects.filter(id=user_id).first()
+        if not user:
+            return JsonResponse({"error": "User not found"}, status=status.HTTP_404_NOT_FOUND)
+
+        # Atualizar o valor do dinheiro do usuário
+        jogo_final, created = Dados_jogo.objects.update_or_create(
+            user=user,
+            defaults={
+                'dinheiro': F('dinheiro') + valor,
+                'inimigos_derrotados': F('inimigos_derrotados') + 1
+            }
+        )
+
+        # Atualizar o valor de dinheiro no banco de dados
+        jogo_final.refresh_from_db()
+
+        # Responder com o valor atualizado de dinheiro
+        return JsonResponse({"dinheiro": jogo_final.dinheiro}, status=status.HTTP_200_OK)
+
+    else:
+        return JsonResponse({'error': 'Only POST method is allowed'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
 
+@api_view(['GET'])
+def get_dinheiro(request):
+    user_id = request.query_params.get('user_id')
+    if not user_id:
+        return Response("precisa do id de usuario", status=status.HTTP_400_BAD_REQUEST)
+    
+    try:
+        jogo_final = Dados_jogo.objects.get(user_id=user_id)
+    except Dados_jogo.DoesNotExist:
+        return Response({"error": "User not found"}, status=status.HTTP_404_NOT_FOUND)
+    
+    return Response(jogo_final.dinheiro, status=status.HTTP_200_OK)
+
+def csrf_token_view(request):
+    return JsonResponse({'csrfToken': get_token(request)})
+
+@login_required
+def feedback_page(request):
+    if request.method == 'POST':
+        rating = request.POST.get('rating')
+        content = request.POST.get('content')
+
+        if not rating:
+            messages.error(request, 'Por favor, escolha uma avaliação com estrelas.')
+            return render(request, 'feedback.html')
+        
+       
+        send_mail(
+            subject=f'Novo Feedback - {rating} Estrelas',
+            message=f'O usuário {request.user.username} enviou a seguinte avaliação:\n\n'
+                    f'Avaliação: {rating} estrelas\n'
+                    f'Comentário: {content}',
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=['suporteoo779@gmail.com'],
+        )
+
+        messages.success(request, 'Feedback enviado com sucesso!')
+        return render(request, 'feedback.html')
+
+    return render(request, 'feedback.html')
+
+@csrf_exempt
+def login_para_godot(request):
+    if request.method == 'POST':
+        
+        data = json.loads(request.body.decode('utf-8'))
+        usuario_nome = data.get('usuario_nome')
+        usuario_senha = data.get('usuario_senha')
+
+        # Debug: Verificar se os valores são os esperados
+        print(f"usuario_nome: {usuario_nome}, usuario_senha: {usuario_senha}")
+
+        user = authenticate(username=usuario_nome, password=usuario_senha)
+
+        if user is None:
+            print("não existe esse usuário")
+        
+
+        if user is not None:
+            print(f"Authenticated user: {user},{user.id}")
+            auth_login(request, user)
+            return JsonResponse({
+                'status': 'success',
+                'username': user.username,
+                'user_id': user.id
+            })
+        else:
+            return JsonResponse({'status': 'error', 'message': 'Invalid credentials'}, status=401)
+    return JsonResponse({'status': 'error', 'message': 'Only POST method is allowed'}, status=405)
 
 
 

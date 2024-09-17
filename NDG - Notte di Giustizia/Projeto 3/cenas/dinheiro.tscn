@@ -1,0 +1,37 @@
+[gd_scene load_steps=3 format=3 uid="uid://dpts0poqn3qtc"]
+
+[ext_resource type="Script" path="res://scripts/aumentar_dinheiro.gd" id="1_qdhti"]
+[ext_resource type="Texture2D" uid="uid://bojvt43sr35dp" path="res://assets/imagens/image-removebg-preview (13) (1).png" id="2_gimnr"]
+
+[node name="dinheiro" type="Control"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_qdhti")
+
+[node name="http" type="HTTPRequest" parent="."]
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 22.0
+offset_top = 43.0
+offset_right = 120.0
+offset_bottom = 130.0
+texture = ExtResource("2_gimnr")
+
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 115.0
+offset_top = 49.0
+offset_right = 516.0
+offset_bottom = 118.0
+theme_override_font_sizes/font_size = 50
+
+[connection signal="request_completed" from="http" to="." method="_on_http_request_completed"]
+[connection signal="request_completed" from="HTTPRequest" to="." method="_on_http_request_request_completed"]

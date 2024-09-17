@@ -348,6 +348,7 @@ h2.text-center {
 
 .accordion .card-body {
     padding: 15px;
+    
 }
 
 .accordion .card-header {
@@ -728,7 +729,7 @@ body.index-page {
 }
 
 /* Fundo da tabela */
-.container {
+.stats-container {
     background-color: #111; /* Fundo escuro para a área da tabela */
     padding: 2rem;
     border-radius: 15px; /* Bordas arredondadas do container */
@@ -744,3 +745,4 @@ body.index-page {
     border: none; /* Remove bordas, se houver */
     padding: 0; /* Remover qualquer preenchimento adicional */
 }
+

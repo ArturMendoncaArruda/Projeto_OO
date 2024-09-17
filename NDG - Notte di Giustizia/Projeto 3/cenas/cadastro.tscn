@@ -1,0 +1,102 @@
+[gd_scene load_steps=3 format=3 uid="uid://boytusw06ash1"]
+
+[ext_resource type="Script" path="res://scripts/cadastro.gd" id="1_81mlj"]
+[ext_resource type="Texture2D" uid="uid://c18qr045q5jom" path="res://assets/imagens/image-removebg-preview (12) (2).png" id="2_ts2pr"]
+
+[node name="cadastro" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_81mlj")
+
+[node name="cadastro" type="Button" parent="."]
+layout_mode = 0
+offset_left = 119.0
+offset_top = 142.0
+offset_right = 203.0
+offset_bottom = 173.0
+text = "Cadastrar"
+
+[node name="Usuario" type="LineEdit" parent="."]
+layout_mode = 0
+offset_left = 67.0
+offset_top = 37.0
+offset_right = 257.0
+offset_bottom = 68.0
+placeholder_text = "Digite um nome..."
+
+[node name="Senha" type="LineEdit" parent="."]
+layout_mode = 0
+offset_left = 69.0
+offset_top = 101.0
+offset_right = 260.0
+offset_bottom = 132.0
+placeholder_text = "Digite uma senha..."
+
+[node name="nome" type="Label" parent="."]
+layout_mode = 0
+offset_left = 136.0
+offset_top = 11.0
+offset_right = 184.0
+offset_bottom = 34.0
+text = "Nome"
+horizontal_alignment = 1
+
+[node name="senha" type="Label" parent="."]
+layout_mode = 0
+offset_left = 132.0
+offset_top = 78.0
+offset_right = 189.0
+offset_bottom = 101.0
+text = "Senha"
+horizontal_alignment = 1
+
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = -2.0
+offset_top = -5.0
+offset_right = 326.0
+offset_bottom = 185.0
+color = Color(0.184314, 0.184314, 0.184314, 0.780392)
+
+[node name="cadastrado" type="Label" parent="."]
+layout_mode = 0
+offset_left = 63.0
+offset_top = 36.0
+offset_right = 258.0
+offset_bottom = 59.0
+text = "Cadastrado com sucesso!"
+
+[node name="ja_existe" type="Label" parent="."]
+layout_mode = 0
+offset_left = 25.0
+offset_top = 37.0
+offset_right = 303.0
+offset_bottom = 60.0
+text = "Usuario já existe, tente outro nome."
+
+[node name="ok" type="Button" parent="."]
+layout_mode = 0
+offset_left = 127.0
+offset_top = 134.0
+offset_right = 189.0
+offset_bottom = 165.0
+text = "Ok"
+
+[node name="voltar" type="Button" parent="."]
+layout_mode = 0
+offset_left = 291.0
+offset_top = 9.0
+offset_right = 309.0
+offset_bottom = 27.0
+icon = ExtResource("2_ts2pr")
+
+[connection signal="pressed" from="cadastro" to="." method="_on_cadastro_pressed"]
+[connection signal="request_completed" from="HTTPRequest" to="." method="_on_http_request_request_completed"]
+[connection signal="pressed" from="ok" to="." method="_on_ok_pressed"]
+[connection signal="pressed" from="voltar" to="." method="_on_voltar_pressed"]

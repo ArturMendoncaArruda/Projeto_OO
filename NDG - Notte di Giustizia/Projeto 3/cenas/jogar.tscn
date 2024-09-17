@@ -1,0 +1,118 @@
+[gd_scene load_steps=3 format=3 uid="uid://b82lm3ueeeyjx"]
+
+[ext_resource type="Script" path="res://scripts/Jogar.gd" id="1_kjj44"]
+[ext_resource type="Texture2D" uid="uid://c18qr045q5jom" path="res://assets/imagens/image-removebg-preview (12) (2).png" id="2_rvus7"]
+
+[node name="Jogar" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_kjj44")
+
+[node name="Login" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.03
+offset_left = 111.0
+offset_top = 142.0
+offset_right = 192.4
+offset_bottom = 173.0
+text = "Login"
+
+[node name="Usuario" type="LineEdit" parent="."]
+layout_mode = 0
+offset_left = 88.0
+offset_top = 34.0
+offset_right = 226.0
+offset_bottom = 58.0
+theme_override_font_sizes/font_size = 10
+placeholder_text = "Digite o nome..."
+clear_button_enabled = true
+
+[node name="Senha" type="LineEdit" parent="."]
+layout_mode = 0
+offset_left = 88.0
+offset_top = 97.0
+offset_right = 226.0
+offset_bottom = 121.0
+theme_override_font_sizes/font_size = 10
+placeholder_text = "Digite a senha..."
+clear_button_enabled = true
+
+[node name="nome" type="Label" parent="."]
+layout_mode = 0
+offset_left = 95.0
+offset_top = 10.0
+offset_right = 210.0
+offset_bottom = 33.0
+text = "Nome"
+horizontal_alignment = 1
+
+[node name="senha" type="Label" parent="."]
+layout_mode = 0
+offset_left = 98.0
+offset_top = 74.0
+offset_right = 213.0
+offset_bottom = 97.0
+text = "Senha
+"
+horizontal_alignment = 1
+
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = -6.0
+offset_top = -7.0
+offset_right = 327.0
+offset_bottom = 186.0
+color = Color(0.196078, 0.196078, 0.196078, 0.811765)
+
+[node name="senha_ruim" type="Label" parent="."]
+layout_mode = 0
+offset_left = -1.0
+offset_top = 51.0
+offset_right = 313.0
+offset_bottom = 75.0
+theme_override_colors/font_color = Color(0.866667, 0, 0.74902, 1)
+theme_override_colors/font_shadow_color = Color(0.827451, 0.827451, 0.827451, 0.670588)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+text = "A senha está incorreta"
+horizontal_alignment = 1
+
+[node name="usuario_nao_existe" type="Label" parent="."]
+layout_mode = 0
+offset_left = -2.0
+offset_top = 53.0
+offset_right = 312.0
+offset_bottom = 77.0
+theme_override_colors/font_color = Color(0.866667, 0, 0.74902, 1)
+theme_override_colors/font_shadow_color = Color(0.827451, 0.827451, 0.827451, 0.670588)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+text = "Usuário não existe"
+horizontal_alignment = 1
+
+[node name="ok" type="Button" parent="."]
+layout_mode = 0
+offset_left = 116.0
+offset_top = 110.0
+offset_right = 198.0
+offset_bottom = 134.0
+theme_override_font_sizes/font_size = 11
+text = "OK"
+
+[node name="voltar" type="Button" parent="."]
+layout_mode = 0
+offset_left = 290.0
+offset_top = 6.0
+offset_right = 308.0
+offset_bottom = 27.0
+icon = ExtResource("2_rvus7")
+
+[connection signal="pressed" from="Login" to="." method="_on_login_pressed"]
+[connection signal="request_completed" from="HTTPRequest" to="." method="_on_http_request_request_completed"]
+[connection signal="pressed" from="ok" to="." method="_on_ok_pressed"]
+[connection signal="pressed" from="voltar" to="." method="_on_voltar_pressed"]

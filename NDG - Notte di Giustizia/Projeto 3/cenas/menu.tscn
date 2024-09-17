@@ -1,0 +1,94 @@
+[gd_scene load_steps=7 format=3 uid="uid://b76wgjhqou41s"]
+
+[ext_resource type="Script" path="res://scripts/Menu.gd" id="1_sg8vd"]
+[ext_resource type="Texture2D" uid="uid://iu7w4ivpejcm" path="res://assets/imagens/fundo.jpg" id="2_3c1ng"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aouro"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cfpeq"]
+bg_color = Color(0.72549, 0.72549, 0.72549, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pccir"]
+bg_color = Color(0.372549, 0.372549, 0.372549, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hcoox"]
+
+[node name="Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_sg8vd")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(160, 90)
+scale = Vector2(1.1, 1.09524)
+texture = ExtResource("2_3c1ng")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 118.0
+offset_top = 99.0
+offset_right = 209.0
+offset_bottom = 147.0
+
+[node name="Jogar" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 15
+theme_override_styles/normal = SubResource("StyleBoxFlat_aouro")
+theme_override_styles/hover = SubResource("StyleBoxFlat_cfpeq")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_pccir")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_hcoox")
+text = "Jogar"
+
+[node name="Sair" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 15
+theme_override_styles/normal = SubResource("StyleBoxFlat_aouro")
+theme_override_styles/hover = SubResource("StyleBoxFlat_cfpeq")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_pccir")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_hcoox")
+text = "Sair"
+
+[node name="Conta" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 15
+theme_override_styles/normal = SubResource("StyleBoxFlat_aouro")
+theme_override_styles/hover = SubResource("StyleBoxFlat_cfpeq")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_pccir")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_hcoox")
+text = "Criar conta"
+
+[connection signal="pressed" from="VBoxContainer/Jogar" to="." method="_on_jogar_pressed"]
+[connection signal="pressed" from="VBoxContainer/Sair" to="." method="_on_sair_pressed"]
+[connection signal="pressed" from="VBoxContainer/Conta" to="." method="_on_conta_pressed"]
